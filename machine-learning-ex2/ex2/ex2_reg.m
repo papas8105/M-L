@@ -17,6 +17,9 @@
 %  or any other files other than those mentioned above.
 %
 
+%%I have done a little modification to see how underfit and overfit looks
+%%like for various lambdas.
+
 %% Initialization
 clear ; close all; clc
 
@@ -60,15 +63,22 @@ X = mapFeature(X(:,1), X(:,2));
 % Initialize fitting parameters
 initial_theta = zeros(size(X, 2), 1);
 
-% Set regularization parameter lambda to 1
-lambda = 1;
+% Set regularization parameter lambda to 1 changed that to an array of
+% values
+lambda = [0,1,5,10,100];
 
 % Compute and display initial cost and gradient for regularized logistic
 % regression
-[cost, grad] = costFunctionReg(initial_theta, X, y, lambda);
-
-fprintf('Cost at initial theta (zeros): %f\n', cost);
-
+[cost1, grad1] = costFunctionReg(initial_theta, X, y, lambda(1));
+[cost2, grad2]  = costFunctionReg(initial_theta,X,y,lambda(2));
+[cost3, grad3] = costFunctionReg(initial_theta,X,y,lambda(3));
+[cost4, grad4] = costFunctionReg(initial_theta,X,y,lambda(4));
+[cost5, grad5] = costFunctionReg(initial_theta,X,y,lambda(5));
+fprintf('Cost at initial theta (zeros) l =0: %f\n', cost1);
+fprintf('Cost at initial theta (zeros) l =1: %f\n', cost2);
+fprintf('Cost at initial theta (zeros) l =5: %f\n', cost3);
+fprintf('Cost at initial theta (zeros) l =10: %f\n', cost4);
+fprintf('Cost at initial theta (zeros) l =100: %f\n', cost5);
 fprintf('\nProgram paused. Press enter to continue.\n');
 pause;
 
@@ -87,30 +97,44 @@ pause;
 initial_theta = zeros(size(X, 2), 1);
 
 % Set regularization parameter lambda to 1 (you should vary this)
-lambda = 1;
+lambda = [0 , 1 , 5 , 10 ,100];
 
 % Set Options
 options = optimset('GradObj', 'on', 'MaxIter', 400);
 
 % Optimize
-[theta, J, exit_flag] = ...
-	fminunc(@(t)(costFunctionReg(t, X, y, lambda)), initial_theta, options);
-
+[theta1, J1, exit_flag] = ...
+	fminunc(@(t)(costFunctionReg(t, X, y, lambda(1))), initial_theta, options);
+[theta2, J2, exit_flag] = ...
+	fminunc(@(t)(costFunctionReg(t, X, y, lambda(2))), initial_theta, options);
+[theta3, J3, exit_flag] = ...
+	fminunc(@(t)(costFunctionReg(t, X, y, lambda(3))), initial_theta, options);
+[theta4, J4, exit_flag] = ...
+	fminunc(@(t)(costFunctionReg(t, X, y, lambda(4))), initial_theta, options);
+[theta5, J5, exit_flag] = ...
+	fminunc(@(t)(costFunctionReg(t, X, y, lambda(5))), initial_theta, options);
 % Plot Boundary
-plotDecisionBoundary(theta, X, y);
-hold on;
-title(sprintf('lambda = %g', lambda))
-
-% Labels and Legend
-xlabel('Microchip Test 1')
-ylabel('Microchip Test 2')
-
-legend('y = 1', 'y = 0', 'Decision boundary')
-hold off;
-
+theta_all = {theta1 , theta2 , theta3 , theta4 , theta5}; %cell
+for ii = 1 : 5
+    plotDecisionBoundary(theta_all{ii}, X, y);
+    hold on;
+    title(sprintf('lambda = %g', lambda(ii)))
+    % Labels and Legend
+    xlabel('Microchip Test 1')
+    ylabel('Microchip Test 2')
+    legend('y = 1', 'y = 0', 'Decision boundary')
+    hold off;
+end
 % Compute accuracy on our training set
-p = predict(theta, X);
-
-fprintf('Train Accuracy: %f\n', mean(double(p == y)) * 100);
+p = predict(theta1, X);
+fprintf('Train Accuracy (l = 0): %f\n', mean(double(p == y)) * 100);
+p = predict(theta2,X);
+fprintf('Train Accuracy (l = 1): %f\n', mean(double(p == y)) * 100);
+p = predict(theta3,X);
+fprintf('Train Accuracy (l = 5): %f\n', mean(double(p == y)) * 100);
+p = predict(theta4,X);
+fprintf('Train Accuracy (l = 10): %f\n', mean(double(p == y)) * 100);
+p = predict(theta5,X);
+fprintf('Train Accuracy (l = 100): %f\n', mean(double(p == y)) * 100);
 
 
