@@ -3,16 +3,12 @@ function p = predictOneVsAll(all_theta, X)
 %regression parameters all_theta
 %   p = PREDICT(all_theta, X) computes the predictions for X using a 
 %   threshold at 0.5 (i.e., if sigmoid(all_theta'*x) >= 0.5, predict 1)
-
 m = size(X, 1);
-num_labels = size(all_theta, 1);
-
+%num_labels = size(all_theta, 1);
 % You need to return the following variables correctly 
-p = zeros(size(X, 1), 1);
-
+%p = zeros(size(X, 1), 1);
 % Add ones to the X data matrix
 X = [ones(m, 1) X];
-
 % ====================== YOUR CODE HERE ======================
 % Instructions: Complete the following code to make predictions using
 %               your learned logistic regression parameters (one-vs-all).
@@ -25,17 +21,12 @@ X = [ones(m, 1) X];
 %       are in rows, then, you can use max(A, [], 2) to obtain the max 
 %       for each row.
 %     
- 
 % Coverts to matrix of 5000 examples vs. num_lables (each sample has num_labels of corresponding prob
 z=X*all_theta';
 % Sigmoid function converts to p between 0 to 1
 h=sigmoid(z);
-
 % pval returns the highest value in each row, while p returns the position in each row
-[pval, p]=max(h,[],2);  
-
+[~ , p]=max(h,[],2);  
 % Later in ex3 file, the p will be used to match the y and predict the training accuracy
-% =========================================================================
-
-
+% ============================================================
 end
