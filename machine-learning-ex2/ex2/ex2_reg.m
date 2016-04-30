@@ -136,5 +136,3 @@ p = predict(theta4,X);
 fprintf('Train Accuracy (l = 10): %f\n', mean(double(p == y)) * 100);
 p = predict(theta5,X);
 fprintf('Train Accuracy (l = 100): %f\n', mean(double(p == y)) * 100);
-
-
