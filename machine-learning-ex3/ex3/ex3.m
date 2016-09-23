@@ -1,7 +1,7 @@
 %% Machine Learning Online Class - Exercise 3 | Part 1: One-vs-all
 
 %  Instructions
-%  ------------
+%  -------------------------------------------------------------------------------------------
 % 
 %  This file contains code that helps you get started on the
 %  linear exercise. You will need to complete the following functions 
@@ -21,8 +21,8 @@ clear ; close all; clc
 
 %% Setup the parameters you will use for this part of the exercise
 input_layer_size  = 400;  % 20x20 Input Images of Digits
-num_labels = 10;          % 10 labels, from 1 to 10   
-                          % (note that we have mapped "0" to label 10)
+num_labels           =  10;   % 10 labels, from 1 to 10   
+ % (note that we have mapped "0" to label 10)
 
 %% =========== Part 1: Loading and Visualizing Data ==============
 %  We start the exercise by first loading and visualizing the dataset. 

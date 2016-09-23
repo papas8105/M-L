@@ -21,7 +21,7 @@ X = [ones(m, 1) X];
 %       are in rows, then, you can use max(A, [], 2) to obtain the max 
 %       for each row.
 %     
-% Coverts to matrix of 5000 examples vs. num_lables (each sample has num_labels of corresponding prob
+% Coverts to matrix of 5000 examples vs. num_labels (each sample has num_labels of corresponding prob)
 z=X*all_theta';
 % Sigmoid function converts to p between 0 to 1
 h=sigmoid(z);
